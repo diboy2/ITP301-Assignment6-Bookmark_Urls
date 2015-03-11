@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+	.thumbnail{
+		border:1px solid black;
+	}
+</style>
+</head>
+<body>
+	<input type="text" id="search" onkeyup="narrowSearchField()" />
+	<div id="thumbnails">
+
+	</div>
+</body>
+<script>
+	var website_names = ["CNN","Twitter","Gmail","Youtube","eHarmony","Amazon", "Reddit", "Rotten Tomatoes","Pandora","Wikipedia", "Food Network", "Rate My Professors", "IGN", "Netflix", "Facebook" ];
+	var website_urls = 	["cnn.com", "twitter.com","gmail.com", "youtube.com", "eharmony.com","amazon.com", "reddit.com", "www.rottentomatoes.com", "pandora.com", "wikipedia.com", "foodnetwork.com", "ratemyprofessors.com", "ign.com","netflix.com", "facebook.com"];
+	var website_categories = ["news", "social media", "email", "social media", "dating", "retailer", "social media", "film reviews", "music", "encyclopedia", "cooking programs", "teacher reviews", "entertainment", "streaming media", "social media" ];
+	var website_keywords = ["politics, world, breaking", "tweet, trend, hashtag", "mail, spam, inbox", "videos, music videos", "single, love", "online shopping, delivery, movies, tv", "subreddit, /r/aww, trend","rotten, fresh, movies", "radio, station ", "wiki, background, history, world", "recipes, iron chef", "spicy, grade", "video games, ps4, xbox" ,"tv, programs, movies", "profile, trend"];
+	var thumbnailsHTML = "";
+	for(i=0; i<website_names.length; i++){
+		var thumbnailHTML = "<div class='thumbnail'><br>";
+		thumbnailHTML += "Website Name: " + website_names[i] + "<br>";
+		thumbnailHTML += "Website URL: " + website_urls[i] + "<br>";
+		thumbnailHTML += "Website Category: " + website_categories[i] +"<br>";
+		thumbnailHTML += "Website Keywords: " + website_keywords[i] + "<br>";
+		thumbnailHTML += "</div>";
+		thumbnailsHTML += thumbnailHTML;
+	}
+
+	document.getElementById("thumbnails").innerHTML = thumbnailsHTML;
+
+	function narrowSearchField(){
+		
+
+		thumbnailsHTML = "";
+		var searchValue = document.getElementById("search").value;
+
+		if(searchValue.length!=0){
+			for(i=0; i<website_names.length; i++){
+				var strPattern = searchValue.replace(/s$/,"") + "+"; 
+				var strRE = new RegExp(strPattern, "i");
+				console.log(strRE);
+				if(website_names[i].search(strRE)!=-1 || website_urls[i].search(strRE)!=-1 ||
+					website_categories[i].search(strRE)!=-1 || website_keywords[i].search(strRE)!=-1){
+					var thumbnailHTML = "<div class='thumbnail'><br>";
+				thumbnailHTML += "Website Name: " + website_names[i] + "<br>";
+				thumbnailHTML += "Website URL: " + website_urls[i] + "<br>";
+				thumbnailHTML += "Website Category: " + website_categories[i] +"<br>";
+				thumbnailHTML += "Website Keywords: " + website_keywords[i] + "<br>";
+				thumbnailHTML += "</div><br>";
+				thumbnailsHTML += thumbnailHTML;
+			}
+		} 
+		document.getElementById("thumbnails").innerHTML = thumbnailsHTML;
+	}
+	else{
+		for(i=0; i<website_names.length; i++){
+			var thumbnailHTML = "<div class='thumbnail'><br>";
+			thumbnailHTML += "Website Name: " + website_names[i] + "<br>";
+			thumbnailHTML += "Website URL: " + website_urls[i] + "<br>";
+			thumbnailHTML += "Website Category: " + website_categories[i] +"<br>";
+			thumbnailHTML += "Website Keywords: " + website_keywords[i] + "<br>";
+			thumbnailHTML += "</div>";
+			thumbnailsHTML += thumbnailHTML;
+		}
+
+		document.getElementById("thumbnails").innerHTML = thumbnailsHTML;
+	}
+} 
+
+</script>
+</html>
